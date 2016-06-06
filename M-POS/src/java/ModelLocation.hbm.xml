@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+ 
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping>
+
+    <class name="com.mpos.model.ModelLocation" table="mpos_location_demo">
+        <id name="location_id" column="mposdemo_id" type ="int">
+            <generator class="native"/>
+        </id>
+        <property name="name"     type="string" column="name"/>
+        <property name="lat"      type="double" column="lat"/>
+        <property name="lng"      type="double" column="lng"/>
+        <property name="iso"      type="string" column="iso"/>
+        <property name="province" type="string" column="province"/>
+    </class>
+ 
+</hibernate-mapping>
