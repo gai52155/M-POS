@@ -25,12 +25,7 @@ public class Main_test {
 
     public static void main(String[] args) {
 
-        try {
-            factory = new AnnotationConfiguration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Failed to create sessionFactory object." + ex);
-        }
-
+        SessionFactory factory = HibernateUtil.getSessionFactory();
         Session session = factory.openSession();
         Transaction tx = null;
         try {
@@ -60,6 +55,7 @@ public class Main_test {
             e.printStackTrace();
         } finally {
             session.close();
+            factory.close(); // CLOSE CONNECTION
         }
     }
 }
