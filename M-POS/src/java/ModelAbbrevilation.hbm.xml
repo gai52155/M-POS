@@ -6,12 +6,11 @@
  
 <hibernate-mapping>
 
-    <class name="com.mpos.model.ModelAbbrevilation" table="mpos_location_demo">
-        <id name="abbrevilation_id" column="abbrevilation_id" type ="int">
+    <class name="com.mpos.model.ModelAbbrevilation" table="ModelAbbrevilation">
+        <id name="Country" type="string" column="Country">
             <generator class="native"/>
         </id>
-        <property name="country" type="string" column="country"/>
-        <property name="iso" type="string" column="iso"/>
+        <property name="ISO" type="string" column="ISO"/>
     </class>
  
 </hibernate-mapping>
