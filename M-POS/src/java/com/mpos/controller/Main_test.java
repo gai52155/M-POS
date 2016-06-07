@@ -63,7 +63,6 @@ public class Main_test {
             table.addCell(cell2);
             for (int i = 0; i < data.size(); i++) {
                 PdfPCell temp = new PdfPCell(new Paragraph(data.get(i)));
-                System.out.println(i + " " + data.get(i));
                 temp.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(temp);
             }
