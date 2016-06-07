@@ -5,7 +5,6 @@
  */
 package com.mpos.controller;
 
-import com.mpos.model.ModelLocation;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
