@@ -2,78 +2,66 @@ package com.mpos.model;
 
 public class ModelLocation {
 
-    private int location_id;
-    private String name;
-    private double lat;
-    private double lng;
-    private String iso;
-    private String province;
+    private String Name;
+    private double Lat;
+    private double Lng;
+    private String ISO;
+    private String Province;
     
-
+    //CONSTRUCTOR
     public ModelLocation() {
     }
 
-    public ModelLocation(int location_id, String name, String adminPassword, double lat, 
-                         double lng,String iso, String province) {
-        this.location_id = location_id;
-        this.name = name;
-        this.lat = lat;
-        this.lng = lng;
-        this.iso = iso;
-        this.province = province;
-    }
-
-    //SET GET ID
-    public void setlocation_id(int location_id) {
-        this.location_id = location_id;
-    }
-
-    public int getlocation_id() {
-        return location_id;
+    public ModelLocation(String Name, double Lat, double Lng, String ISO, String Province) {
+        this.Name = Name;
+        this.Lat = Lat;
+        this.Lng = Lng;
+        this.ISO = ISO;
+        this.Province = Province;
     }
     
     // SET GET name
-    public void setname(String name) {
-        this.name = name;
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
-    public String getname() {
-        return name;
+    public String getName() {
+        return Name;
     }
 
     // SET GET lat
-    public void setlat(double lat) {
-        this.lat = lat;
+    public void setLat(double Lat) {
+        this.Lat = Lat;
     }
 
-    public double getlat() {
-        return lat;
+    public double getLat() {
+        return Lat;
     }
     
     // SET GET lng
-    public void setlng(double lng) {
-        this.lng = lng;
+    public void setLng(double Lng) {
+        this.Lng = Lng;
     }
 
-    public double getlng() {
-        return lng;
+    public double getLng() {
+        return Lng;
     }
     
     // SET GET iso
-    public void setiso(String iso) {
-        this.iso = iso;
+    public void setISO(String ISO) {
+        this.ISO = ISO;
     }
 
-    public String getiso() {
-        return iso;
+    public String getISO() {
+        return ISO;
     }
     
     // SET GET province
-    public void setprovince(String province) {
-        this.province = province;
+    public void setProvince(String Province) {
+        this.Province = Province;
     }
 
-    public String getprovince() {
-        return province;
+    public String getProvince() {
+        return Province;
     }
 }

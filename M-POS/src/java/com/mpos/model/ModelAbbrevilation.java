@@ -5,43 +5,33 @@
  */
 package com.mpos.model;
 public class ModelAbbrevilation {
-    private int abbrevilation_id;
-    private String country;
-    private String iso;
+    private String Country;
+    private String ISO;
     
+    //CONSTRUCTOR
     public ModelAbbrevilation() {
     }
 
-    public ModelAbbrevilation(int abbrevilation_id, String name, String country, String iso) {
-        this.abbrevilation_id = abbrevilation_id;
-        this.country = country;
-        this.iso = iso;
-    }
-
-    //SET GET ID
-    public void setabbrevilation_id(int abbrevilation_id) {
-        this.abbrevilation_id = abbrevilation_id;
-    }
-
-    public int getabbrevilation_id() {
-        return abbrevilation_id;
+    public ModelAbbrevilation(String Country, String ISO) {
+        this.Country = Country;
+        this.ISO = ISO;
     }
     
     // SET GET country
-    public void setcountry(String country) {
-        this.country = country;
+    public void setCountry(String Country) {
+        this.Country = Country;
     }
     
-    public String getcountry() {
-        return country;
+    public String getCountry() {
+        return Country;
     }
     
     // SET GET iso
-    public void setiso(String iso) {
-        this.iso = iso;
+    public void setISO(String ISO) {
+        this.ISO = ISO;
     }
     
-    public String getiso() {
-        return iso;
+    public String getISO() {
+        return ISO;
     }
 }
