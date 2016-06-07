@@ -6,6 +6,8 @@
 package com.mpos.controller;
 
 import com.mpos.model.ModelLocation;
+import com.mpos.model.ModelAbbrevilation;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -19,28 +21,63 @@ import org.hibernate.Transaction;
  * @author Katawut
  */
 public class ControllerSelect {
-    public static void selector(){
-    SessionFactory factory = HibernateUtil.getSessionFactory();
+
+    public static SessionFactory factory = HibernateUtil.getSessionFactory();
+
+    public static String getISO(String country) {
+        String ISO = "";
         Session session = factory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String sql = "SELECT * FROM mpos_location_demo";
+            String sql = "SELECT * FROM abbreviation WHERE Country = '" + country + "'";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(ModelAbbrevilation.class);
+            List location = query.list();
+            if (location.isEmpty()) {
+                ISO = "NULL";
+            } else {
+                for (Iterator iterator
+                        = location.iterator(); iterator.hasNext();) {
+                    ModelAbbrevilation place = (ModelAbbrevilation) iterator.next();
+
+                    ISO = place.getISO();
+                }
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        return ISO;
+    }
+
+    public static ArrayList<String> selector(String country) {
+
+        ArrayList<String> data = new ArrayList<String>();
+        String ISO = getISO(country);
+        System.out.println(ISO);
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            String sql = "SELECT * FROM location WHERE ISO = '" + ISO + "'";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(ModelLocation.class);
             List location = query.list();
             if (location.isEmpty()) {
-                System.out.println("No data");
-            }
-            for (Iterator iterator
-                    = location.iterator(); iterator.hasNext();) {
-                ModelLocation place = (ModelLocation) iterator.next();
-                System.out.print("ID : " + place.getlocation_id());
-                System.out.print("name : " + place.getname());
-                System.out.println("lat : " + place.getlat());
-                System.out.print("lng : " + place.getlng());
-                System.out.print("iso : " + place.getiso());
-                System.out.println("province : " + place.getprovince());
+                data.add("NULL");
+            } else {
+                for (Iterator iterator
+                        = location.iterator(); iterator.hasNext();) {
+                    ModelLocation place = (ModelLocation) iterator.next();
+
+                    data.add(place.getName());
+                    data.add(String.valueOf(place.getLat()));
+                    data.add(String.valueOf(place.getLng()));
+                }
             }
             tx.commit();
         } catch (HibernateException e) {
@@ -52,5 +89,6 @@ public class ControllerSelect {
             session.close();
             factory.close(); // CLOSE CONNECTION
         }
+        return data;
     }
 }
