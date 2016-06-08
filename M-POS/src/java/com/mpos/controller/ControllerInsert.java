@@ -22,7 +22,7 @@ public class ControllerInsert {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String sql = "INSERT INTO mpos_location_demo (name,lat,lng,iso,province,abbrevilation_id,country) VALUES ('qqq',11,11,'th','bangkok',1,'thailand')";
+            String sql = "INSERT INTO location (Name,Lat,Lng,ISO,Province) VALUES ('???',???,???,'??','??????')";//write down values you want to enter into the table by following this order
             SQLQuery query = session.createSQLQuery(sql);
             query.executeUpdate();
             tx.commit();
