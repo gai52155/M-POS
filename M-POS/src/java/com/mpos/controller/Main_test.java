@@ -6,8 +6,10 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -18,13 +20,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main_test {
-
+    
     public static final String DEST = "D:/Intern/Report.pdf"; // SAVE TO ?
     public static Font headerfont = new Font(Font.FontFamily.TIMES_ROMAN, 27);
 
     public static void main(String[] args) throws IOException,
             DocumentException {
-        String country = "Thailand";
+        String country = "Myanmar";
 
         File file = new File(DEST);
         file.getParentFile().mkdirs();
@@ -39,14 +41,18 @@ public class Main_test {
         PdfWriter.getInstance(document, new FileOutputStream(dest));
 
         document.open();
-
-        Paragraph header = new Paragraph(country, headerfont); // SET HEADER
+        // text watermark
+        Font f = new Font(FontFamily.HELVETICA, 30);
+        Phrase p = new Phrase("My watermark (text)", f);        
+        Paragraph header = new Paragraph(country+"\n"+"LOCATION REPORT \n", headerfont); // SET HEADER
         header.setAlignment(Element.ALIGN_CENTER);
         document.add(header);
         document.add(Chunk.NEWLINE);
 
         if (data.size() == 1) {
-            Paragraph error = new Paragraph("Database not having data", headerfont);
+            Paragraph error = new Paragraph("Database doesn't having "+country+" place", headerfont);
+            error.setAlignment(Element.ALIGN_CENTER);
+            document.add(error);
         } else {
 
             PdfPTable table = new PdfPTable(3);
