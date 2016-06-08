@@ -22,7 +22,7 @@ public class ControllerUpdate {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            String sql = "UPDATE mpos_location_demo SET name='hhh' WHERE iso = 'th' ";
+            String sql = "UPDATE location SET name='???' WHERE iso = '???' ";//insert position and which values you want to edit from the table
             SQLQuery query = session.createSQLQuery(sql);
             query.executeUpdate();
             tx.commit();
