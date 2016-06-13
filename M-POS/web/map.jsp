@@ -1,9 +1,10 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Map</title>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link href="css/loadingicon.css" rel="stylesheet" type="text/css"/>
@@ -71,12 +72,12 @@
                     <label for="Country">Select Country</label>
                     <div class="form-group">
                         <s:select name="Country" cssClass="form-control"
-                                  onchange="selectCountry()" list="{'--- Choose country ---', 'Thailand', 'Laos', 'Myanmar'}" />
+                                  onchange="selectCountry()" list="{'--- เลือกประเทศ ---', 'Thailand', 'Laos', 'Myanmar'}" />
                     </div>
                     <label for="place">Select place</label>
                     <div class="form-group">
                         <s:select cssClass="form-control" name="place" 
-                                  onchange="place()" list="{'--- Choose location ---'}" />
+                                  onchange="place()" list="{'--- เลือกพื้นที่ ---'}" />
                         <div class="loader" id="loader"></div>
                     </div>
                 </div>
