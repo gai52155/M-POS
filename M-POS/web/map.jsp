@@ -56,7 +56,7 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Page 1</a></li>
+                    <li><a href="#">export</a></li>
                     <li><a href="#">Page 2</a></li> 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -71,12 +71,12 @@
                     <label for="Country">Select Country</label>
                     <div class="form-group">
                         <s:select name="Country" cssClass="form-control"
-                                  onchange="selectCountry()" list="{'---Choose country---', 'Thailand', 'Laos', 'Myanmar'}" />
+                                  onchange="selectCountry()" list="{'--- Choose country ---', 'Thailand', 'Laos', 'Myanmar'}" />
                     </div>
                     <label for="place">Select place</label>
                     <div class="form-group">
                         <s:select cssClass="form-control" name="place" 
-                                  onchange="place()" list="{'---Choose location---'}" />
+                                  onchange="place()" list="{'--- Choose location ---'}" />
                         <div class="loader" id="loader"></div>
                     </div>
                 </div>
