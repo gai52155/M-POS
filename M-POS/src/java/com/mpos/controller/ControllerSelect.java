@@ -77,6 +77,8 @@ public class ControllerSelect {
                     data.add(place.getName());
                     data.add(String.valueOf(place.getLat()));
                     data.add(String.valueOf(place.getLng()));
+                    data.add(String.valueOf(place.getISO()));
+                    data.add(String.valueOf(place.getProvince()));
                 }
             }
             tx.commit();
@@ -86,8 +88,7 @@ public class ControllerSelect {
             }
             e.printStackTrace();
         } finally {
-            session.close();
-            factory.close(); // CLOSE CONNECTION
+            session.close(); // CLOSE CONNECTION
         }
         return data;
     }

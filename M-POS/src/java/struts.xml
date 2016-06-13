@@ -4,11 +4,9 @@
 
 <struts>
     <!-- Configuration for the default package. -->
-    <constant name="struts.devMode" value="true" />
-    
-    <package name="default" extends="struts-default" namespace="/">  
-        <action name="getjson" class="com.mpos.controller.Jsonex">
-            <result type="json"/>
+    <package name="default" extends="struts-default">
+        <action name="Location" class="com.mpos.controller.ControllerMapdata">
+            <result name="success">/json.jsp</result>
         </action>
-    </package>  
+    </package>
 </struts>
