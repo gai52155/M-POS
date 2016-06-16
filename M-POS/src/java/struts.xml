@@ -8,5 +8,9 @@
         <action name="Location" class="com.mpos.controller.ControllerMapdata">
             <result name="success">/json.jsp</result>
         </action>
+        
+        <action name="printPDF" class="com.mpos.controller.ControllerDownloadPDF">
+            <result name="success">/json.jsp</result>
+        </action>
     </package>
 </struts>

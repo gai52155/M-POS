@@ -58,7 +58,6 @@ public class ControllerSelect {
 
         ArrayList<String> data = new ArrayList<String>();
         String ISO = getISO(country);
-        System.out.println(ISO);
         Session session = factory.openSession();
         Transaction tx = null;
         try {

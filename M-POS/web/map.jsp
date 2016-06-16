@@ -6,12 +6,22 @@
         <title>Map</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <link href="css/loadingicon.css" rel="stylesheet" type="text/css"/>
-
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+        <!-- CUSTOM -->
+        <!-- LOADING ICON -->
+        <link href="css/loadingicon.css" rel="stylesheet" type="text/css"/> 
         <script src="customjs/loadingicon.js" type="text/javascript"></script>
+
+        <!-- dropdown CSS -->
+        <link href="css/dropdown.css" rel="stylesheet" type="text/css"/>
+        <script src="customjs/dropdown.js" type="text/javascript"></script>
+
+
+
+
         <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 
         <style>
@@ -24,7 +34,7 @@
 
             select option
             {
-                font-size: 18px;
+                font-size: 15px;
             }
 
             select option:nth-child(odd)
@@ -57,8 +67,14 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">export</a></li>
-                    <li><a href="#">Page 2</a></li> 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Setting <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Add</a></li>
+                            <li><a href="#">Edit</a></li>
+                            <li><a href="#">Delete</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -69,17 +85,33 @@
             <div class="row">
                 <legend>GOOGLE MAP</legend>
                 <div class="col-md-3">
-                    <label for="Country">Select Country</label>
-                    <div class="form-group">
-                        <s:select name="Country" cssClass="form-control"
-                                  onchange="selectCountry()" list="{'--- เลือกประเทศ ---', 'Thailand', 'Laos', 'Myanmar'}" />
+                    <div id="countrySection" class="countrySection">
+                        <label for="Country">Select Country</label>
+                        <div class="form-group">
+                            <s:select name="Country" cssClass="form-control"
+                                      onchange="selectCountry()" list="{'--- เลือกประเทศ ---', 'Thailand', 'Laos', 'Myanmar'}" />
+                        </div>
                     </div>
-                    <label for="place">Select place</label>
-                    <div class="form-group">
-                        <s:select cssClass="form-control" name="place" 
-                                  onchange="place()" list="{'--- เลือกพื้นที่ ---'}" />
-                        <div class="loader" id="loader"></div>
+                    <div id="placeSection" class="placeSection">
+                        <label for="place">Select place</label>
+                        <div class="form-group">
+                            <s:select cssClass="form-control" name="place" 
+                                      onchange="place()" list="{'--- เลือกพื้นที่ ---'}" />
+                        </div>
                     </div>
+                    <div>
+                        <div class="printbutton">
+
+                        </div>
+                        <s:submit name="create" cssClass="btn btn-primary btn-md dropdown-toggle"
+                                  data-toggle="dropdown"  onclick="createpdf()" value="สร้างรายงานของประเทศนี้"/>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Add</a></li>
+                            <li><a href="#">Edit</a></li>
+                            <li><a href="#">Delete</a></li>
+                        </ul>
+                    </div>
+                    <div class="loader" id="loader"></div>
                 </div>
                 <label for="map">GOOGLE MAP</label>
                 <div id="map" class="col-md-9 col-sm-12"></div>
@@ -87,28 +119,33 @@
         </div>
 
         <script type="text/javascript">
-
-            var map = new google.maps.Map(document.getElementById('map'), {
+            var map;
+            var country;
+            var countrydata;
+            var start = {lat: 13.75633, lng: 100.50177};
+            map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 4,
-                center: {lat: 13.75633, lng: 100.50177},
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+                center: start
             });
 
+            $("#placeSection").hide();
+            $("#create").hide();
             function selectCountry()
             {
                 loading();
                 setDefault(); // PREPARE FOR MOVE TO clearAll();
 
                 var e = document.getElementById("Country");
-                var country = e.options[e.selectedIndex].value;
-                if (country !== "choose country")
+                country = e.options[e.selectedIndex].value;
+                if (country !== "--- เลือกประเทศ ---")
                 {
                     $(document).ready(function () {
                         $.post("Location", {
                             location: country
                         }).done(function (data) {
-                            obj = JSON.parse(data.replace(/&quot;/g, '"'));
-
+                            countrydata = data.replace(/&quot;/g, '"');
+                            obj = JSON.parse(countrydata);
+                            
                             var row = Object.keys(obj).length;
                             var x = document.getElementById("place");
 
@@ -119,8 +156,23 @@
                                 x.add(option);
                             }
                             loadComplete();
+                            $("#placeSection").show();
+                            $("#create").show();
                         });
                     });
+                }
+                else
+                {
+                    clearMarker();
+                    //SET MAP START
+                    map.setZoom(4);
+                    map.panTo(start);
+
+                    loadComplete();
+
+                    //HIDE PLACE SELECT & PRINT BUTTON
+                    $("#placeSection").hide();
+                    $("#create").hide();
                 }
             }
 
@@ -144,7 +196,7 @@
                 geocoder.geocode({'location': latlng}, function (results, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
                         if (results[1]) {
-                            map.setZoom(11);
+                            map.setZoom(15);
                             var marker = new google.maps.Marker({
                                 position: latlng,
                                 map: map
@@ -173,9 +225,10 @@
                     }
                 });
             }
-
             function setDefault()
             {
+                $("#placeSection").hide();
+                $(".doc").remove();
                 document.getElementById('place').options.length = 1;
             }
 
@@ -185,6 +238,29 @@
                     markers[i].setMap(null);
                 }
                 markers = [];
+            }
+
+            //PDF PRINT
+            function createpdf()
+            {
+                $(document).ready(function () {
+                    $.post("printPDF", {
+                        country: country,
+                        countrydata: countrydata
+                    }).done(function (data) {
+                        $("#create").hide();
+                        loading();
+                        setTimeout(function () {
+                            openPDF();
+                        }, 5000);
+                    });
+                });
+            }
+            function openPDF()
+            {
+                loadComplete();
+                var $formrow = "<a href='PDF/" + country + ".pdf' class='btn btn-primary btn-md doc' role='button' download>โหลดเลย!</a>";
+                $('.printbutton').append($formrow);
             }
         </script>
     </body>
