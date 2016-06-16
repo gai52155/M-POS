@@ -94,7 +94,7 @@ public class CreatePDF {
             PdfPTable tablee = new PdfPTable(1);
             tablee.setTotalWidth(523);
             int page = document.getPageNumber() + 1;
-            PdfPCell cell = new PdfPCell(new Phrase("-หน้าที่" + page + "-"));
+            PdfPCell cell = new PdfPCell(new Phrase("PAGE : " + page + "-"));
             cell.setBorderColor(BaseColor.WHITE);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             tablee.addCell(cell);
