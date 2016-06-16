@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  *
@@ -40,14 +41,15 @@ public class CreatePDF {
     public static Font headerfont = new Font(Font.FontFamily.TIMES_ROMAN, 27);
 
     public static void mainPDF(String country, ArrayList<String> list) throws IOException, DocumentException {
-        String DEST = "D:/M-POS/M-POS/web/PDF/" + country + ".pdf"; // SAVE TO ?
+        Calendar cal = Calendar.getInstance();
+
+        String DEST = "D:/M-POS/M-POS/web/PDF/" + country + "_" + cal.get(Calendar.DAY_OF_MONTH) + "_" + cal.get(Calendar.MONTH) + "_" + (cal.get(Calendar.YEAR) - 543) + ".pdf"; // SAVE TO ?
         File file = new File(DEST);
         file.getParentFile().mkdirs();
-        ArrayList<String> data = list;
         new CreatePDF().createPdf(DEST, country, list);
     }
 
-    public void createPdf(String dest, String country, ArrayList<String> data) throws IOException, DocumentException {
+    public void createPdf(String dest, String country, ArrayList<String> list) throws IOException, DocumentException {
 
         Document document = new Document(PageSize.A4, 0f, 0f, 0f, 0f);
 
@@ -58,7 +60,7 @@ public class CreatePDF {
         header.setAlignment(Element.ALIGN_CENTER);
         document.add(header);
 
-        if (data.size() == 1) {
+        if (list.size() == 1) {
             Paragraph error = new Paragraph("Database doesn't having " + country + " place", headerfont);
             error.setAlignment(Element.ALIGN_CENTER);
             document.add(error);
@@ -84,8 +86,8 @@ public class CreatePDF {
             table.addCell(cell0);
             table.addCell(cell1);
             table.addCell(cell2);
-            for (int i = 0; i < data.size(); i++) {
-                PdfPCell temp = new PdfPCell(new Paragraph(data.get(i)));
+            for (String data1 : list) {
+                PdfPCell temp = new PdfPCell(new Paragraph(data1));
                 temp.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(temp);
             }

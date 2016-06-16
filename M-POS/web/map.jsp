@@ -145,7 +145,7 @@
                         }).done(function (data) {
                             countrydata = data.replace(/&quot;/g, '"');
                             obj = JSON.parse(countrydata);
-                            
+
                             var row = Object.keys(obj).length;
                             var x = document.getElementById("place");
 
@@ -256,11 +256,18 @@
                     });
                 });
             }
+
+            var d = new Date();
             function openPDF()
             {
-                loadComplete();
-                var $formrow = "<a href='PDF/" + country + ".pdf' class='btn btn-primary btn-md doc' role='button' download>โหลดเลย!</a>";
-                $('.printbutton').append($formrow);
+                $.ajax({
+                    url: "PDF/" + country + "_" + d.getDate() + "_" + d.getMonth() + "_" + d.getFullYear() + ".pdf", //or your url
+                    success: function (data) {
+                        var $formrow = "<a href='PDF/" + country + "_" + d.getDate() + "_" + d.getMonth() + "_" + d.getFullYear() + ".pdf' class='btn btn-primary btn-md doc' role='button' download>โหลดเลย!</a>";
+                        $('.printbutton').append($formrow);
+                        loadComplete();
+                    }
+                });
             }
         </script>
     </body>

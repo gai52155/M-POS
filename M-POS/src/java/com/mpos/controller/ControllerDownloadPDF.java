@@ -34,9 +34,9 @@ public class ControllerDownloadPDF extends ActionSupport {
     }
 
     public String execute() throws IOException, DocumentException, JSONException {
-        
+
         JSONArray jsonarray = new JSONArray(getCountrydata());
-        
+
         ArrayList<String> data = new ArrayList<>();
         for (int i = 0; i < jsonarray.length(); ++i) {
             JSONObject rec = jsonarray.getJSONObject(i);
