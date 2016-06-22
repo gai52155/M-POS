@@ -40,7 +40,7 @@ public class ControllerDownloadPDF extends ActionSupport {
         ArrayList<String> data = new ArrayList<>();
         for (int i = 0; i < jsonarray.length(); ++i) {
             JSONObject rec = jsonarray.getJSONObject(i);
-            
+
             data.add(rec.getString("name"));
             data.add(rec.getString("lng"));
             data.add(rec.getString("lat"));

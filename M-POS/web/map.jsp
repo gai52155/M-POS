@@ -105,11 +105,6 @@
                         </div>
                         <s:submit name="create" cssClass="btn btn-primary btn-md dropdown-toggle"
                                   data-toggle="dropdown"  onclick="createpdf()" value="สร้างรายงานของประเทศนี้"/>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Add</a></li>
-                            <li><a href="#">Edit</a></li>
-                            <li><a href="#">Delete</a></li>
-                        </ul>
                     </div>
                     <div class="loader" id="loader"></div>
                 </div>
@@ -250,9 +245,7 @@
                     }).done(function (data) {
                         $("#create").hide();
                         loading();
-                        setTimeout(function () {
-                            openPDF();
-                        }, 5000);
+                        openPDF();
                     });
                 });
             }
@@ -261,11 +254,16 @@
             function openPDF()
             {
                 $.ajax({
-                    url: "PDF/" + country + "_" + d.getDate() + "_" + d.getMonth() + "_" + d.getFullYear() + ".pdf", //or your url
+                    url: "PDF/" + country + "_" + d.getDate() + "_" + d.getMonth() + "_" + d.getFullYear() + ".pdf", //เช็ค IF FILE EXIST
                     success: function (data) {
-                        var $formrow = "<a href='PDF/" + country + "_" + d.getDate() + "_" + d.getMonth() + "_" + d.getFullYear() + ".pdf' class='btn btn-primary btn-md doc' role='button' download>โหลดเลย!</a>";
+                        var $formrow = "<a href='PDF/" + country + "_" + d.getDate() + "_" + d.getMonth() + "_" + d.getFullYear() + ".pdf' class='btn btn-primary btn-md doc' role='button' download>DOWNLOAD เอกสาร!</a>";
                         $('.printbutton').append($formrow);
                         loadComplete();
+                    },
+                    error: function (data) {
+                        setTimeout(function () {
+                            openPDF();
+                        }, 1000); //1000 = 1s
                     }
                 });
             }

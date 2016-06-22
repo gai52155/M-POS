@@ -50,7 +50,6 @@ public class ControllerMapdata extends ActionSupport {
                 obj[j].put("lng", data.get(i++));
                 obj[j].put("iso", data.get(i++));
                 obj[j].put("province", data.get(i++));
-                
 
                 jsonArray.put(obj[j++]);
 

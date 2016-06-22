@@ -56,7 +56,7 @@ public class ControllerSelect {
 
     public static ArrayList<String> selector(String country) {
 
-        ArrayList<String> data = new ArrayList<String>();
+        ArrayList<String> data = new ArrayList<>();
         String ISO = getISO(country);
         Session session = factory.openSession();
         Transaction tx = null;
@@ -83,11 +83,12 @@ public class ControllerSelect {
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
-                tx.rollback();
+                tx.rollback(); // = clear transection ?
             }
             e.printStackTrace();
         } finally {
             session.close(); // CLOSE CONNECTION
+            //factory.close();
         }
         return data;
     }
